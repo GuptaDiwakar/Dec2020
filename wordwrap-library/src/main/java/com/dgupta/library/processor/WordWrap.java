@@ -98,10 +98,10 @@ public class WordWrap {
          * 
          * @param out output for wrapped text
          */
-        public void wrap() {
+        public String wrap() {
             try {
          
-                wordWrapString(inputData, newLine, maxWidth);
+                return wordWrapString(inputData, newLine, maxWidth);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             } finally {
