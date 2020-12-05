@@ -1,0 +1,9 @@
+wordwrap:
+  default:
+    length: 15
+    character: \r\n
+
+spring:
+  config:
+    name: validationmessages
+

@@ -1,5 +1,0 @@
-wordwrap:
-  default:
-    length: 15
-    character: \r\n
-

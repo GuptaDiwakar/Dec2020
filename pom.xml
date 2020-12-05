@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>web_application</module>
-        <module>library</module>
+        <module>wordwrap-application</module>
+        <module>wordwrap-library</module>
     </modules>
     
     <groupId>com.dgupta</groupId>
