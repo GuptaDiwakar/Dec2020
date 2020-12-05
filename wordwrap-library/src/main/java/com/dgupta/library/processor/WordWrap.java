@@ -1,37 +1,34 @@
 package com.dgupta.library.processor;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringWriter;
+import com.dgupta.library.utils.WordWrapUtils;
+import com.dgupta.wordwrap.constant.Constants;
+
 import java.io.Writer;
-import java.util.Set;
-import java.util.function.Function;
 
 
 public class WordWrap {
-	
-	
-	/**
+
+
+    /**
      * Make private constructor to make class Singleton.
-     * 
      */
-	private WordWrap() {
+    private WordWrap() {
         // prevent instantiation
     }
-	
-	
+
+
     /**
      * Sets the source to be wrapped and returns a builder to specify more
      * parameters.
-     * 
-     * @param reader source to be wrapped
+     *
+     * @param inputData source to be wrapped
      * @return builder
      */
     private static Builder from(String inputData) {
         return new Builder(inputData);
     }
-	
-	 /**
+
+    /**
      * Provides method chaining for specifying parameters to word wrap.
      */
     public static final class Builder {
@@ -44,13 +41,13 @@ public class WordWrap {
         Builder(String inputData) {
             this.inputData = inputData;
         }
-        
-        
+
+
         /**
          * Sets the maximum width of a line using the {@code stringWidth} function. Word
          * wrapping/splitting will be attempted for lines with greater than
          * {@code maxWidth}. If not set the default is 80.
-         * 
+         *
          * @param maxWidth maximum width of a line using the {@code stringWidth}
          *                 function.
          * @return this
@@ -58,18 +55,16 @@ public class WordWrap {
          *                                  zero
          */
         public Builder maxWidth(Number maxWidth) {
-        	WordWrapUtils.checkArgument(maxWidth.doubleValue() > 0);
+            WordWrapUtils.checkArgument(maxWidth.doubleValue() > 0);
             this.maxWidth = maxWidth;
             return this;
         }
-        
-	
-        
-        
+
+
         /**
          * Sets the newLine string to be used. If not set the default is '\n' (line feed
          * character).
-         * 
+         *
          * @param newLine string to be output on for a new line delimiter
          * @return this
          */
@@ -77,13 +72,13 @@ public class WordWrap {
             this.newLine = newLine;
             return this;
         }
-        
-        
+
+
         /**
          * If a word is longer than {@code maxWidth} and {@code breakWords} is true then
          * such a word will be broken across two or more lines (with or without a hyphen
-         * according to {@link Builder#insertHyphens(boolean)}).
-         * 
+         * according to 
+         *
          * @param breakWords if true then break words across lines
          * @return this
          */
@@ -91,38 +86,38 @@ public class WordWrap {
             this.breakWords = breakWords;
             return this;
         }
-        
+
         /**
          * Performs the wrapping of the source text and writes output to the given
          * {@link Writer}.
-         * 
-         * @param out output for wrapped text
+         *
+         * @return out output for wrapped text
          */
         public String wrap() {
             try {
-         
-                return wordWrapString(inputData, newLine, maxWidth);
+
+                return wordWrapString(inputData, newLine,(int) maxWidth);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             } finally {
-               // close all objects
+                // close all objects
             }
         }
-}
-               
-    /**
-     * @param input       the input which needs to be wrapped
-     * @param breakLength at what length the string needs to be wrapped
-     * @param lineBreak   which character to be used for new liner
-     * @return wrapped string
-     */
-    public String wordWrapString(String input, String lineBreak, int breakLength) {
-        if (breakLength <= 0)
-            throw new IllegalArgumentException(Constants.MSG1);
-        if (input.length() < breakLength)
-            return input;
-        return WordWrapUtils.wrapIndividualLines(lineBreak, input, breakLength);
+
+        /**
+         * @param input       the input which needs to be wrapped
+         * @param breakLength at what length the string needs to be wrapped
+         * @param lineBreak   which character to be used for new liner
+         * @return wrapped string
+         */
+        public String wordWrapString(String input, String lineBreak, int breakLength) {
+            if (breakLength <= 0)
+                throw new IllegalArgumentException(Constants.MSG1);
+            if (input.length() < breakLength)
+                return input;
+            return WordWrapUtils.wrapIndividualLines(lineBreak, input, breakLength);
+        }
     }
 
-   
+
 }
