@@ -28,7 +28,11 @@ public class WordWrapServiceImpl implements WordWrapService {
         if (breakCharacter == null || breakCharacter.isEmpty())
             breakCharacter = this.breakCharacter;
         StringBuilder sb = new StringBuilder();
-        return wordWrap.wrapString(breakCharacter, input, breakLength);
+        
+        return WordWrap.from(input)
+        		.maxWidth(breakLength)
+        		.newLine(breakCharacter)
+        		.wrap();
 
     }
 
