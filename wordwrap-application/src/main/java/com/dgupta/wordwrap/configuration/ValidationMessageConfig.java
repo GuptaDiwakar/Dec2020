@@ -13,8 +13,8 @@ public class ValidationMessageConfig {
         ReloadableResourceBundleMessageSource messageSource
                 = new ReloadableResourceBundleMessageSource();
 
-        messageSource.setBasename("classpath:messages");
-        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setBasename(Constants.CLASSPATHMSG);
+        messageSource.setDefaultEncoding(Constants.UTF8);
         return messageSource;
     }
 

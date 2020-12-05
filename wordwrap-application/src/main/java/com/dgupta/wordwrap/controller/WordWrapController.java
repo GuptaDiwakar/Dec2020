@@ -16,8 +16,8 @@ import javax.validation.constraints.NotNull;
 
 @RestController
 public class WordWrapController {
-    final
-    WordWrapService wordWrapService;
+    
+	final WordWrapService wordWrapService;
 
     final ValidationConfiguration validationConfiguration;
 
