@@ -1,38 +1,128 @@
 package com.dgupta.library.processor;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Set;
+import java.util.function.Function;
+
+
 public class WordWrap {
+	
+	
+	/**
+     * Make private constructor to make class Singleton.
+     * 
+     */
+	private WordWrap() {
+        // prevent instantiation
+    }
+	
+	
+    /**
+     * Sets the source to be wrapped and returns a builder to specify more
+     * parameters.
+     * 
+     * @param reader source to be wrapped
+     * @return builder
+     */
+    private static Builder from(String inputData) {
+        return new Builder(inputData);
+    }
+	
+	 /**
+     * Provides method chaining for specifying parameters to word wrap.
+     */
+    public static final class Builder {
+
+        private final String inputData;
+        private Number maxWidth = 80;
+        private String newLine = "\n";
+        private boolean breakWords = true;
+
+        Builder(String inputData) {
+            this.inputData = inputData;
+        }
+        
+        
+        /**
+         * Sets the maximum width of a line using the {@code stringWidth} function. Word
+         * wrapping/splitting will be attempted for lines with greater than
+         * {@code maxWidth}. If not set the default is 80.
+         * 
+         * @param maxWidth maximum width of a line using the {@code stringWidth}
+         *                 function.
+         * @return this
+         * @throws IllegalArgumentException if {@code maxWidth} is less than or equal to
+         *                                  zero
+         */
+        public Builder maxWidth(Number maxWidth) {
+        	WordWrapUtils.checkArgument(maxWidth.doubleValue() > 0);
+            this.maxWidth = maxWidth;
+            return this;
+        }
+        
+	
+        
+        
+        /**
+         * Sets the newLine string to be used. If not set the default is '\n' (line feed
+         * character).
+         * 
+         * @param newLine string to be output on for a new line delimiter
+         * @return this
+         */
+        public Builder newLine(String newLine) {
+            this.newLine = newLine;
+            return this;
+        }
+        
+        
+        /**
+         * If a word is longer than {@code maxWidth} and {@code breakWords} is true then
+         * such a word will be broken across two or more lines (with or without a hyphen
+         * according to {@link Builder#insertHyphens(boolean)}).
+         * 
+         * @param breakWords if true then break words across lines
+         * @return this
+         */
+        public Builder breakWords(boolean breakWords) {
+            this.breakWords = breakWords;
+            return this;
+        }
+        
+        /**
+         * Performs the wrapping of the source text and writes output to the given
+         * {@link Writer}.
+         * 
+         * @param out output for wrapped text
+         */
+        public void wrap() {
+            try {
+         
+                wordWrapString(inputData, newLine, maxWidth);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+               // close all objects
+            }
+        }
+}
+               
     /**
      * @param input       the input which needs to be wrapped
      * @param breakLength at what length the string needs to be wrapped
      * @param lineBreak   which character to be used for new liner
      * @return wrapped string
      */
-    public String wrapString(String lineBreak, String input, int breakLength) {
+    public String wordWrapString(String input, String lineBreak, int breakLength) {
         if (breakLength <= 0)
-            throw new IllegalArgumentException("Break length should be more than zero.");
+            throw new IllegalArgumentException(Constants.MSG1);
         if (input.length() < breakLength)
             return input;
-        return wrapIndividualLines(lineBreak, input, breakLength);
+        return WordWrapUtils.wrapIndividualLines(lineBreak, input, breakLength);
     }
 
-    private String wrapIndividualLines(String lineBreak, String input, int breakLength) {
-        String[] individualWords = input.split(" ");
-        StringBuilder lineBuilder = new StringBuilder();
-        StringBuilder outputBuilder = new StringBuilder();
-
-        for (String word : individualWords) {
-            if (isLineExceedingBreakLength(breakLength, lineBuilder, word)) {
-                outputBuilder.append(lineBuilder.toString().trim()).append(lineBreak);
-                lineBuilder = new StringBuilder();
-            }
-            lineBuilder.append(word).append(" ");
-        }
-        outputBuilder.append(lineBuilder).append(lineBreak);
-
-        return outputBuilder.toString().trim();
-    }
-
-    private boolean isLineExceedingBreakLength(int breakLength, StringBuilder lineBuilder, String word) {
-        return word.length() + lineBuilder.length() + 1 > breakLength && lineBuilder.length() > 0;
-    }
+   
 }
