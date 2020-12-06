@@ -32,7 +32,7 @@ public class WordWrapController {
      * @param input is a custom json object which provides fields for doing so
      * @return wrapped string
      */
-    @PostMapping("/wordWrap")
+    @PostMapping("/wordWrap", produces = "application/vnd.company.app-v1+json")
     public ResponseEntity<String> wordWrap(@Valid @RequestBody Input input) {
         return new ResponseEntity<>(wordWrapService.wordWrap(input.getInput(), input.getBreakLength(), input.getBreakString()), HttpStatus.OK);
     }

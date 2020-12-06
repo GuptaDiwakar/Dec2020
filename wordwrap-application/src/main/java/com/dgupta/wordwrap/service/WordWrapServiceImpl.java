@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WordWrapServiceImpl implements WordWrapService {
-    private static final WordWrap wordWrap = new WordWrap();
+   
 
     @Value("${wordwrap.default.length}")
     private int defaultBreakLength;

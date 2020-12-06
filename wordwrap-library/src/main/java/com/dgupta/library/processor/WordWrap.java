@@ -24,7 +24,7 @@ public class WordWrap {
      * @param inputData source to be wrapped
      * @return builder
      */
-    private static Builder from(String inputData) {
+    public static Builder from(String inputData) {
         return new Builder(inputData);
     }
 
