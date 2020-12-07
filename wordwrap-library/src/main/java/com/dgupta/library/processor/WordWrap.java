@@ -1,7 +1,7 @@
 package com.dgupta.library.processor;
 
+import com.dgupta.library.constant.Constants;
 import com.dgupta.library.utils.WordWrapUtils;
-import com.dgupta.wordwrap.constant.Constants;
 
 import java.io.Writer;
 

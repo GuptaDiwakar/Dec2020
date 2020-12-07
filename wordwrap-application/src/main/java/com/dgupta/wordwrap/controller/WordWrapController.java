@@ -2,6 +2,7 @@ package com.dgupta.wordwrap.controller;
 
 import com.dgupta.wordwrap.api.WordWrapService;
 import com.dgupta.wordwrap.constant.ValidationConfiguration;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,11 @@ public class WordWrapController {
      * @param input is a custom json object which provides fields for doing so
      * @return wrapped string
      */
-    @PostMapping(value = "/wordWrap"/*, produces = "application/vnd.company.app-v1+json"*/)
+    @PostMapping(value = "/wordWrap", produces = "application/vnd.company.app-v1+json")
+    @Operation(description = "Rest endpoint for wrapping provided text." +
+            "user needs to provide a break-length of more than 0, and optionally can " +
+            "provide a custom break string to be used.", summary = "API for text wrapping."
+    )
     public ResponseEntity<String> wordWrap(@Valid @RequestBody Input input) {
         return new ResponseEntity<>(wordWrapService.wordWrap(input.getInput(), input.getBreakLength(), input.getBreakString()), HttpStatus.OK);
     }

@@ -1,6 +1,6 @@
 package com.dgupta.library.utils;
 
-import com.dgupta.wordwrap.constant.Constants;
+import com.dgupta.library.constant.Constants;
 
 public class WordWrapUtils {
 
