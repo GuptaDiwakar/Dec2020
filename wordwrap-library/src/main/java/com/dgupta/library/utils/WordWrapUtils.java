@@ -15,13 +15,15 @@ public class WordWrapUtils {
         StringBuilder outputBuilder = new StringBuilder();
 
         for (String word : individualWords) {
+            if ((word.isEmpty() || word.isBlank()))
+                continue;
             if (isLineExceedingBreakLength(breakLength, lineBuilder, word)) {
                 outputBuilder.append(lineBuilder.toString().trim()).append(lineBreak);
                 lineBuilder = new StringBuilder();
             }
             lineBuilder.append(word).append(Constants.SPACE);
         }
-        outputBuilder.append(lineBuilder).append(lineBreak);
+        outputBuilder.append(lineBuilder);
 
         return outputBuilder.toString().trim();
     }
