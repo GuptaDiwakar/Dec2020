@@ -1,4 +1,4 @@
-package com.dgupta.wordwrap.constant;
+package com.dgupta.library.constant;
 
 public class Constants {
 	
